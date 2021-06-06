@@ -1,21 +1,39 @@
 package com.acme.tour.controller
 
 import com.acme.tour.model.Promocao
-import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestMethod
-import org.springframework.web.bind.annotation.RestController
+import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.web.bind.annotation.*
+import java.util.concurrent.ConcurrentHashMap
 
 @RestController
+@RequestMapping(value = ["/promocoes"])
 class PromocaoController {
 
-    @RequestMapping(value = ["/sayHello"], method = arrayOf(RequestMethod.GET))
-    fun sayHello(): String {
-        return "Hello World"
+    @Autowired
+    lateinit var promocoes: ConcurrentHashMap<Long, Promocao>
+
+    @GetMapping("/{id}")
+    fun getGetId(@PathVariable id: Long) = promocoes[id]
+
+    @PostMapping()
+    fun create(@RequestBody promocao: Promocao) {
+        promocoes[promocao.id] = promocao
     }
 
-    @RequestMapping(value = ["/promocoes"], method = arrayOf(RequestMethod.GET))
-    fun getPromocao(): Promocao {
-        val promocao = Promocao(1, "Maravilhosa viagem a Cancun", "Cancun", true, 7, 4200.99)
-        return promocao
+    @DeleteMapping("/{id}")
+    fun delete(@PathVariable id: Long) {
+        promocoes.remove(id)
     }
+
+    @PutMapping("/{id}")
+    fun update(@PathVariable id: Long, @RequestBody promocao: Promocao) {
+        promocoes.replace(id,promocao)
+    }
+
+    //@RequestMapping(value = ["/promocoes"], method = arrayOf(RequestMethod.GET))
+    @GetMapping()
+    fun getAll(@RequestParam(required = false, defaultValue = "") localFilter: String) =
+        promocoes.filter {
+            it.value.local.contains(localFilter, true)
+        }.map(Map.Entry<Long, Promocao>::value).toList()
 }

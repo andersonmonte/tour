@@ -12,7 +12,7 @@
 	<artifactId>tour</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>tour</name>
-	<description>Microservice da agencia de turismo</description>
+	<description>Microservice da agência de turismo</description>
 	<properties>
 		<java.version>1.8</java.version>
 		<kotlin.version>1.5.10</kotlin.version>

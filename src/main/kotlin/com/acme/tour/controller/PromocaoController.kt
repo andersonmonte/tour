@@ -60,12 +60,8 @@ class PromocaoController {
     //@RequestMapping(value = ["/promocoes"], method = arrayOf(RequestMethod.GET))
     @GetMapping()
     fun getAll(@RequestParam(required = false, defaultValue = "") localFilter: String): ResponseEntity<List<Promocao>> {
-        var status = HttpStatus.OK
-        val listaPromocoes = this.promocaoService.searchByLocal(localFilter)
-        if (listaPromocoes.isEmpty()) {
-            status = HttpStatus.NOT_FOUND
-        }
-
-        return ResponseEntity(listaPromocoes, status)
+        val listPromocoes = this.promocaoService.getAll()
+        val status = if (listPromocoes.isEmpty()) HttpStatus.NOT_FOUND else HttpStatus.OK
+        return ResponseEntity(listPromocoes, status)
     }
 }

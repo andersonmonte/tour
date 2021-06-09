@@ -24,11 +24,7 @@
     <autoscroll-to-editor value="false" />
     <autoscroll-from-editor value="true" />
     <show-object-properties value="true" />
-    <loaded-nodes>
-      <connection connection-id="fcfc7cfd-aee1-40cd-8d6f-162db33db456">
-        <schema name="tour" object-types="table, view, procedure, function, constraint, index, column, dataset trigger" />
-      </connection>
-    </loaded-nodes>
+    <loaded-nodes />
   </component>
   <component name="DBNavigator.Project.DatabaseConsoleManager">
     <connection id="fcfc7cfd-aee1-40cd-8d6f-162db33db456">
@@ -45,11 +41,17 @@
     <connection id="fcfc7cfd-aee1-40cd-8d6f-162db33db456" />
     <connection id="1488f87b-16ce-46ec-9475-d50b185e7705" />
   </component>
+  <component name="DBNavigator.Project.DatasetFilterManager">
+    <filter-actions connection-id="1488f87b-16ce-46ec-9475-d50b185e7705" dataset="tour.promocao" active-filter-id="EMPTY_FILTER" />
+  </component>
   <component name="DBNavigator.Project.EditorStateManager">
     <last-used-providers />
   </component>
   <component name="DBNavigator.Project.ExecutionManager">
     <retain-sticky-names value="false" />
+  </component>
+  <component name="DBNavigator.Project.FileConnectionMappingManager">
+    <mapping file-url="file://$PROJECT_DIR$/src/main/resources/data.sql" connection-id="1488f87b-16ce-46ec-9475-d50b185e7705" session-id="MAIN" current-schema="tour" />
   </component>
   <component name="DBNavigator.Project.MethodExecutionManager">
     <method-browser />
@@ -67,7 +69,9 @@
     <filters />
   </component>
   <component name="DBNavigator.Project.ScriptExecutionManager" clear-outputs="true">
-    <recently-used-interfaces />
+    <recently-used-interfaces>
+      <mapping database-type="MYSQL" interface-id="f9b941f1-008b-4148-8fc4-54b1fd36a446" />
+    </recently-used-interfaces>
   </component>
   <component name="DBNavigator.Project.Settings">
     <connections>
@@ -174,7 +178,7 @@
           <deprecated-pwd value="YWRtaW5teXNxbA==" />
         </database>
         <properties>
-          <auto-commit value="false" />
+          <auto-commit value="true" />
         </properties>
         <ssh-settings>
           <active value="false" />
@@ -556,7 +560,9 @@
         <prompt-execution value="false" />
       </statement-execution>
       <script-execution>
-        <command-line-interfaces />
+        <command-line-interfaces>
+          <value id="f9b941f1-008b-4148-8fc4-54b1fd36a446" name="MySQL client" executable-path="$PROJECT_DIR$/../../../../../Program Files/MySQL/MySQL Server 5.7/bin/mysql.exe" database-type="MYSQL" />
+        </command-line-interfaces>
         <execution-timeout value="300" />
       </script-execution>
       <method-execution>

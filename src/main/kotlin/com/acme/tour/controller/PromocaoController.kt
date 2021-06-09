@@ -18,6 +18,9 @@ class PromocaoController {
     @Autowired
     lateinit var promocaoService: PromocaoService
 
+    @GetMapping("/menorQue9000")
+    fun getAllMenores() = this.promocaoService.getAllByPrecoMenorQue9000()
+
     @GetMapping("/{id}")
     fun getGetById(@PathVariable id: Long): ResponseEntity<Any> {
         val promocao = this.promocaoService.getById(id)
@@ -68,6 +71,9 @@ class PromocaoController {
     }
 
     @GetMapping("/count")
-        fun count(): ResponseEntity<Map<String, Long>> =
+    fun count(): ResponseEntity<Map<String, Long>> =
         ResponseEntity.ok().body(mapOf("count" to this.promocaoService.count()))
+
+    @GetMapping("/ordenados")
+    fun ordenados() = this.promocaoService.getAllSortedByLocal()
 }

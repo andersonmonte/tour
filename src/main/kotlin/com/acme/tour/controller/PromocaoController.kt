@@ -1,5 +1,7 @@
 package com.acme.tour.controller
 
+import com.acme.tour.exception.PromocaoNotFoundException
+import com.acme.tour.model.ErrorMessage
 import com.acme.tour.model.Promocao
 import com.acme.tour.model.RespostaJSON
 import com.acme.tour.service.PromocaoService
@@ -16,11 +18,17 @@ class PromocaoController {
     @Autowired
     lateinit var promocaoService: PromocaoService
 
+    @GetMapping("/menorQue9000")
+    fun getAllMenores() = this.promocaoService.getAllByPrecoMenorQue9000()
+
     @GetMapping("/{id}")
-    fun getGetById(@PathVariable id: Long): ResponseEntity<Promocao?> {
+    fun getGetById(@PathVariable id: Long): ResponseEntity<Any> {
         val promocao = this.promocaoService.getById(id)
-        val status = if (promocao == null) HttpStatus.NOT_FOUND else HttpStatus.OK
-        return ResponseEntity(promocao, status)
+        //val status = if (promocao == null) HttpStatus.NOT_FOUND else HttpStatus.OK
+        return if (promocao != null)
+            ResponseEntity(promocao, HttpStatus.OK)
+        else
+            ResponseEntity(ErrorMessage("Promoção Não Localizada", "Promoção ${id} não localizada"), HttpStatus.NOT_FOUND)
     }
 
     @PostMapping()
@@ -54,13 +62,18 @@ class PromocaoController {
 
     //@RequestMapping(value = ["/promocoes"], method = arrayOf(RequestMethod.GET))
     @GetMapping()
-    fun getAll(@RequestParam(required = false, defaultValue = "") localFilter: String): ResponseEntity<List<Promocao>> {
-        var status = HttpStatus.OK
-        val listaPromocoes = this.promocaoService.searchByLocal(localFilter)
-        if (listaPromocoes.isEmpty()) {
-            status = HttpStatus.NOT_FOUND
-        }
+    fun getAll(@RequestParam(required = false, defaultValue = "0") start: Int,
+               @RequestParam(required = false, defaultValue = "3") size: Int): ResponseEntity<List<Promocao>> {
 
-        return ResponseEntity(listaPromocoes, status)
+        val list = this.promocaoService.getAll(start, size)
+        val status = if(list.isEmpty()) HttpStatus.NOT_FOUND else HttpStatus.OK
+        return ResponseEntity(list, status)
     }
+
+    @GetMapping("/count")
+    fun count(): ResponseEntity<Map<String, Long>> =
+        ResponseEntity.ok().body(mapOf("count" to this.promocaoService.count()))
+
+    @GetMapping("/ordenados")
+    fun ordenados() = this.promocaoService.getAllSortedByLocal()
 }

@@ -1,10 +1,17 @@
 package com.acme.tour.model
 
+import javax.persistence.*
+
+@Entity
+//@Table(name = "TBL_PROMOCAO")
 data class Promocao (
-    val id: Long,
-    val descricao: String,
-    val local: String,
-    val isAllInclusive: Boolean,
-    val qtdDias: Int,
-    val preco: Double
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    val id: Long = 1,
+    val descricao: String = "",
+    val local: String = "",
+    val isAllInclusive: Boolean = false,
+    //@Column(name = "quantidadeDeDias")
+    val qtdDias: Int = 1,
+    val preco: Double = 0.0
 )
